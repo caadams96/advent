@@ -28,13 +28,15 @@ int main(){
     rx= (((int)time(NULL))&0xfffff)+1;
     offer(0);
     limit= (hinted[0]?1000:330);
-    /********MOTIONS*******************
+
+    /* *************MOTIONS**********************************************
      * The motion words either specify a direction or a simple action or a place.
      * Motion words take you from one location to another, when the motion is permitted.
      * Here is a list of their possible meanings.
      *
      * */
     build_motion_words();
+
     /* *****************************************OBJECTS**********************************************************
      *The object words refer to things like a lamp, a bird, batteries, etc.; objects have properties that will be
      * described later. Here is a list of the basic objects. Objects GOLD and higher are the “treasures.” Extremely
@@ -50,13 +52,13 @@ int main(){
      * */
     build_action_words();
 
-    /****************************MESSAGES******************
+    /* ***************************MESSAGES******************
      * Finally, our vocabulary is rounded out by words like help,
      * which trigger the printing of fixed messages.
      * */
     build_message_words(k);
 
-    /********************CAVE-DATA*****************************************************************
+    /* *******************CAVE-DATA*****************************************************************
     * You might be in any of more than 100 places as you wander about in Colossal Cave.
     * Let’s enumerate them now, so that we can build the data structures that define the travel restrictions.
     * A special negative value called inhand is the location code for objects that you are carrying. But you
@@ -71,7 +73,7 @@ int main(){
     * locations aren’t really even locations; they invoke special code. This device is a convenient way to provide
     * a variety of features without making the program logic any more cluttered than it already is.
     * */
-    /********************************************************************************
+    /* *******************************************************************************
      *Speaking of program logic, the complex cave dynamics are essentially kept in a table. The table tells
      * us what to do when you ask for a particular motion in a particular location. Each entry of the table is called
      * an instruction; and each instruction has three parts: a motion, a condition, and a destination.
@@ -92,7 +94,7 @@ int main(){
      * that has a different destination and/or condition from this one. The next instruction might itself be
      * conditional in the same way. (Numerous examples appear below.)
      * */
-    /*********************************************************************************
+    /* ********************************************************************************
      *Suppose you’re at location l.
      * Then start[l] is the first relevant instruction, and start[l + 1] − 1 is the last.
      * Also long desc[l] is a string that fully describes l;
@@ -101,7 +103,7 @@ int main(){
      * Special properties of this location, such as whether a lantern is necessary or a hint might be advisable,
      * are encoded in the bits of flags [l].
      * */
-    /************** Cave connections **************************************************
+    /* ************* Cave connections **************************************************
      * Now we are ready to build the fundamental table of location and transition data,
      *  by filling in the arrays just declared.
      *  We will fill them in strict order of their location codes.
@@ -109,7 +111,7 @@ int main(){
      * */
     build_travel_table(q);
 
-    /********************************************************************************************************************************
+    /* *******************************************************************************************************************************
      *Data structures for objects. A fixed universe of objects was enumerated in the vocabulary section.
      * Most of the objects can move or be moved from place to place; so we maintain linked lists of the objects at
      * each location. The first object at location l is first[l], then comes link [first[l]], then link [link [first[l]]], etc.,
@@ -135,7 +137,7 @@ int main(){
      * One more array completes our set of data structures: Objects that appear in inventory reports have a
      * name, name [t].
      */
-    /*******************************************************************************************************
+    /* ******************************************************************************************************
     * Object data. Now it’s time to build the object structures just defined.
     * We put the objects into their initial locations backwards, that is, highest first; moreover, we place all
     * two-part objects before placing the others. Then low-numbered objects will appear first in the list, and
