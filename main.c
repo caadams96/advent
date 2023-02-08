@@ -1,24 +1,63 @@
+/************INCLUDES**********/
 #include <stdio.h>
 #include "globals.h"
 
+
+/*PROTOTYPES*/
+/* ******************************************************************
+ *  Here is the subroutine that puts words into our vocabulary,
+ *      when the program is getting ready to run.
+ * */
 void new_word(char *w ,int m);
+/* **********************************************************************
+ *  While we’re at it, let’s write the program that will look up a word.
+ *  It returns the location of the word in the hash table,
+ *  or −1 if you’ve given a word like ‘tickle’ or ‘terse’ that is unknown.
+ *  */
 int lookup(char *w);
+/* ************************************************************************************************
+ *Here then is a simple subroutine to place an object at a given location,
+ * when the object isn’t presently in a list.
+ * */
 void drop(object t, location l);
+/* ********************************************************
+ *Similarly, we need a subroutine to pick up an object.
+ * */
 void carry(object t);
+/* *****************************************************************************************************
+ *The is at loc subroutine tests if a possibly multipart object is at a particular place.
+ * It uses the fact that multipart objects have consecutive values, and base [max obj + 1] ≡ NOTHING.
+ * */
 boolean is_at_loc(object t);
+/* *********************************************************************************
+ *Sometimes we need to ask you a question,
+ * for which the answer is either yes or no.
+ * The subroutine yes (q, y, n) prints q, waits for you to answer, and then prints y or n depending on your answer.
+ * It returns a nonzero value if your answer was affirmative.
+ * */
 boolean yes(char *q, char *y, char *n);
+/* ***************************************************************************************************
+ *The only other kind of input is almost as simple.
+ * You are supposed to tell us what to do next in your adventure, by typing one- or two-word commands.
+ * We put the first word in word1 and the (possibly null) second word in word2 .
+ * Words are separated by white space; otherwise white space is ignored.
+ * */
 void listen(void);
+
+
 int ran(int range);
 int dwarf(void);
 void offer(int j);
 int score(void);
+
+
 void build_motion_words(void);
 void build_object_words(void);
 void build_action_words(void);
 void build_message_words(register int k);
 void build_travel_table(register instruction *q);
 void build_object_table(void);
-/********************MAIN*********************************************/
+/* *******************MAIN******************************** */
 int main(){
     register int j,k = 0;
     register char*p;
@@ -1118,10 +1157,7 @@ in the general direction you want to go.");break;
     exit(0);
 }
 /********************************************************************/
-/* ******************************************************************
- *  Here is the subroutine that puts words into our vocabulary,
- *      when the program is getting ready to run.
- * */
+
 void new_word( char*w, int m){
     register int h,k;register char*p;
     for(h= 0,p= w;*p;p++)h= (*p+h+h)%hash_prime;
@@ -1132,11 +1168,7 @@ void new_word( char*w, int m){
     hash_table[h].word_type= current_type;
     hash_table[h].meaning= m;
 }
-/* **********************************************************************
- *  While we’re at it, let’s write the program that will look up a word.
- *  It returns the location of the word in the hash table,
- *  or −1 if you’ve given a word like ‘tickle’ or ‘terse’ that is unknown.
- *  */
+
 int lookup(char *w){
 
     register int h;register char*p;register char t;
@@ -1151,10 +1183,7 @@ int lookup(char *w){
     return-1;
 
 }
-/* ************************************************************************************************
- *Here then is a simple subroutine to place an object at a given location,
- * when the object isn’t presently in a list.
- * */
+
 void drop(object t, location l){
     if(toting(t))holding--;
     place[t]= l;
@@ -1165,9 +1194,7 @@ void drop(object t, location l){
     }
 
 }
-/* ********************************************************
- *Similarly, we need a subroutine to pick up an object.
- * */
+
 void carry(object t){
     register location l= place[t];
     if(l>=limbo){
@@ -1181,22 +1208,14 @@ void carry(object t){
         }
     }
 }
-/* *****************************************************************************************************
- *The is at loc subroutine tests if a possibly multipart object is at a particular place.
- * It uses the fact that multipart objects have consecutive values, and base [max obj + 1] ≡ NOTHING.
- * */
+
 boolean is_at_loc(object t){
     register object tt;
     if(base[t]==NOTHING)return place[t]==loc;
     for(tt= t;base[tt]==t;tt++)if(place[tt]==loc)return true;
     return false;
 }
-/* *********************************************************************************
- *Sometimes we need to ask you a question,
- * for which the answer is either yes or no.
- * The subroutine yes (q, y, n) prints q, waits for you to answer, and then prints y or n depending on your answer.
- * It returns a nonzero value if your answer was affirmative.
- * */
+
 boolean yes(char *q, char *y, char *n){
     while(1){
         printf("%s\n** ",q);fflush(stdout);
@@ -1210,12 +1229,7 @@ boolean yes(char *q, char *y, char *n){
         }else printf(" Please answer Yes or No.\n");
     }
 }
-/* ***************************************************************************************************
- *The only other kind of input is almost as simple.
- * You are supposed to tell us what to do next in your adventure, by typing one- or two-word commands.
- * We put the first word in word1 and the (possibly null) second word in word2 .
- * Words are separated by white space; otherwise white space is ignored.
- * */
+
 void listen(void){
     register char*p,*q;
     while(1){
@@ -1286,11 +1300,7 @@ int score(void){
 
 
 void build_motion_words(void){
-/* **MOTIONS******************************
- * The motion words either specify a direction or a simple action or a place.
- * Motion words take you from one location to another, when the motion is permitted.
- * Here is a list of their possible meanings.
- * */
+
     current_type= motion_type;
     new_word("north",N);
     new_word("n",N);

@@ -332,7 +332,7 @@ For information on how to end your adventure, etc., type \"INFO\".\n\
                         -  -  -\n\
 The first adventure program was developed by Willie Crowther.\n\
 Most of the features of the current program were added by Don Woods;\n\
-all of its bugs were added by Don Knuth.",
+all of its bugs were added by Don Knuth & mostly Corey Adams.",
         "It says, \"There is something strange about this place, such that one\n\
 of the words I've always known now has a new effect.\"",
         "The grate is very solid and has a hardened steel lock.  You cannot\n\
