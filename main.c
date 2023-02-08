@@ -9,26 +9,31 @@
  *      when the program is getting ready to run.
  * */
 void new_word(char *w ,int m);
+
 /* **********************************************************************
  *  While we’re at it, let’s write the program that will look up a word.
  *  It returns the location of the word in the hash table,
  *  or −1 if you’ve given a word like ‘tickle’ or ‘terse’ that is unknown.
  *  */
 int lookup(char *w);
+
 /* ************************************************************************************************
  *Here then is a simple subroutine to place an object at a given location,
  * when the object isn’t presently in a list.
  * */
 void drop(object t, location l);
+
 /* ********************************************************
  *Similarly, we need a subroutine to pick up an object.
  * */
 void carry(object t);
+
 /* *****************************************************************************************************
  *The is at loc subroutine tests if a possibly multipart object is at a particular place.
  * It uses the fact that multipart objects have consecutive values, and base [max obj + 1] ≡ NOTHING.
  * */
 boolean is_at_loc(object t);
+
 /* *********************************************************************************
  *Sometimes we need to ask you a question,
  * for which the answer is either yes or no.
@@ -36,6 +41,7 @@ boolean is_at_loc(object t);
  * It returns a nonzero value if your answer was affirmative.
  * */
 boolean yes(char *q, char *y, char *n);
+
 /* ***************************************************************************************************
  *The only other kind of input is almost as simple.
  * You are supposed to tell us what to do next in your adventure, by typing one- or two-word commands.
