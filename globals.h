@@ -111,25 +111,11 @@ drop(t,l) ; \
 
 #define highest_class 8 \
 
-/*1:*/
-#line 85 "adventure.w"
-/* Copyright (C) 1998 by Don Woods and Don Knuth; all rights reserved */
-
-/*:1*//*2:*/
-#line 92 "adventure.w"
-
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
 #include <time.h>
 #include <stdlib.h>
-
-//#ifdef __STDC__
-//#define ARGS(list) list
-//#else
-//#define ARGS(list) ()
-//#endif
-
 
 typedef enum{false,true}boolean;
 
@@ -140,7 +126,6 @@ typedef struct{
     char word_type;
     char meaning;
 }hash_entry;
-
 
 typedef enum{
     N,S,E,W,NE,SE,NW,SW,
@@ -155,7 +140,6 @@ typedef enum{
     PIT,SLIT,CRACK,DOME,HOLE,WALL,HALL,ROOM,FLOOR,
     STAIRS,STEPS,COBBLES,SURFACE,DARK,LOW,OUTDOORS,
     Y2,XYZZY,PLUGH,PLOVER,OFFICE,NOWHERE}motion;
-
 
 typedef enum{
     NOTHING,KEYS,LAMP,GRATE,GRATE_,
