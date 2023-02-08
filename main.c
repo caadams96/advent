@@ -562,13 +562,16 @@ int main(){
                     report("Okay, from now on I'll only describe a place in full the first time\n"
                            "you come to it.  To get the full description, say \"LOOK\".");
 
-                case SCORE:printf("If you were to quit now, you would score %d\n"
+                case SCORE:
+                    printf("If you were to quit now, you would score %d\n"
                                   "out of a possible %d.\n",score()-4,max_score);
-                    if(!yes("Do you indeed wish to quit now?",ok,ok))continue;
-                    goto give_up;
-
-                case QUIT:if(!yes("Do you really wish to quit now?",ok,ok))
+                    if(!yes("Do you indeed wish to quit now?",ok,ok)){
                         continue;
+                    }goto give_up;
+                case QUIT:
+                    if(!yes("Do you really wish to quit now?",ok,ok)){
+                        continue;
+                    }
                 give_up:gave_up= true;goto quit;
                 case FEEFIE:while(!streq(word1,incantation[k]))k++;
                     if(foobar==-k)/*139:*/
