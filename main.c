@@ -1688,57 +1688,6 @@ unless you explicitly ask me to.");
 
 }
 void build_travel_table(register instruction *q){
-    /********************CAVE-DATA*****************************************************************
- * You might be in any of more than 100 places as you wander about in Colossal Cave.
- * Let’s enumerate them now, so that we can build the data structures that define the travel restrictions.
- * A special negative value called inhand is the location code for objects that you are carrying. But you
- * yourself are always situated in a place that has a nonnegative location code.
- * Nonnegative places ≤ outside are outside the cave, while places ≥ inside are inside. The upper part of
- * the cave, places < emist, is the easiest part to explore. (We will see later that dwarves do not venture this
- * close to the surface; they stay ≥ emist.)
- * Places between inside and dead2 , inclusive, form the main cave; the next places, up to and including barr ,
- * form the hidden cave on the other side of the troll bridge; then neend and swend are a private cave.
- * The remaining places, ≥ crack are dummy locations, not really part of the maze. As soon as you arrive
- * at a dummy location, the program immediately sends you somewhere else. In fact, the last three dummy
- * locations aren’t really even locations; they invoke special code. This device is a convenient way to provide
- * a variety of features without making the program logic any more cluttered than it already is.
- * */
-/********************************************************************************
- *Speaking of program logic, the complex cave dynamics are essentially kept in a table. The table tells
- * us what to do when you ask for a particular motion in a particular location. Each entry of the table is called
- * an instruction; and each instruction has three parts: a motion, a condition, and a destination.
- * The motion part of an instruction is one of the motion verbs enumerated earlier. The condition part c is
- * a small integer, interpreted as follows:
- * • if c = 0, the condition is always true;
- * • if 0 < c < 100, the condition is true with probability c/100;
- * • if c = 100, the condition is always true, except for dwarves;
- * • if 100 < c <= 200, you must have object c mod 100;
- * • if 200 < c <= 300, object c mod 100 must be in the current place;
- * • if 300 < c <= 400, prop[c mod 100] must not be 0;
- * • if 400 < c <= 500, prop[c mod 100] must not be 1;
- * • if 500 < c <= 600, prop[c mod 100] must not be 2; etc.
- * (We will discuss properties of objects and the prop array later.) The destination d is either a location or a
- * number greater than max loc; in the latter case, if d ≤ max spec we perform a special routine, otherwise we
- * print remarks [d − max spec] and stay in the current place.
- * If the motion matches what you said but the condition is not satisfied, we move on to the next instruction
- * that has a different destination and/or condition from this one. The next instruction might itself be
- * conditional in the same way. (Numerous examples appear below.)
- * */
-/*********************************************************************************
- *Suppose you’re at location l.
- * Then start[l] is the first relevant instruction, and start[l + 1] − 1 is the last.
- * Also long desc[l] is a string that fully describes l;
- * short desc[l] is an optional abbreviated description;
- * and visits [l] tells how many times you have been here.
- * Special properties of this location, such as whether a lantern is necessary or a hint might be advisable,
- * are encoded in the bits of flags [l].
- * */
-/************** Cave connections **************************************************
- * Now we are ready to build the fundamental table of location and transition data,
- *  by filling in the arrays just declared.
- *  We will fill them in strict order of their location codes.
- *  It is convenient to define several macros and constants.
- * */
     q= travels;
     make_loc(road,
              "You are standing at the end of a road before a small brick building.\n\
